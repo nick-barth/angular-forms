@@ -14,30 +14,34 @@
     <div class="row">
       <div class="col-md-6 col-md-offset-3">
         <div ng-app='SurveyApp' ng-controller="FormCtrl">
-          <form name='surveyForm'  data-ng-repeat="survey in surveys">
-            <h2>Survey ID: <span ng-bind='survey.id'></span></h2>
-            <div class="form-group">
-              <label for="name">Survey Name</label>
-              <input type="text" ng-model='survey.name' class="form-control">
+          <form name='surveyForm'>
+            <div data-ng-repeat="survey in surveys">
+              <h2>Survey ID: <span ng-bind='survey.id'></span></h2>
+              <div class="form-group">
+                <label for="title">Survey Title</label>
+                <input type="text" name='title' ng-model='survey.title' class="form-control" ng-maxlength="100">
+                <span ng-show="surveyForm.title.$error.maxlength">Way too long, 100 character max buddy.</span>
+              </div>
+              <div class="form-group">
+                <label for="desc">Survey Description</label>
+                <input type="text" name="desc" ng-model='survey.desc' class="form-control" ng-maxlength="500">
+                <span ng-show="surveyForm.desc.$error.maxlength">Way too long, 500 character max buddy.</span>
+              </div>
+              <div class="form-group">
+                <label for="desc">Survey Point Value</label>
+                <input name='points' type="text" ng-model='survey.pointValue' class="form-control" integer>
+                <span ng-show="surveyForm.points.$error.integer">It's gotta be a positive integer.</span>
+              </div>
+              <div class="form-group" data-ng-repeat="question in survey.questions">
+                <label for="desc">Question <span ng-bind='question.qID'></span>:</label>
+                <input type="text" ng-model='question.title' class="form-control">
+              </div>
+              <button type="button" ng-click="addNewQuestion(survey.id)" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Question</button>
             </div>
-            <div class="form-group">
-              <label for="desc">Survey Description</label>
-              <input type="text" ng-model='survey.desc' class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="desc">Survey Point Value</label>
-              <input name='points' type="number" ng-model='survey.points' class="form-control" min="0" integer>
-              <span ng-show="survey.points.$error.integer">The value is not a valid integer!</span>
-            </div>
-            <div class="form-group" data-ng-repeat="question in survey.qs">
-              <label for="desc">Question <span ng-bind='question.num'></span>:</label>
-              <input type="text" ng-model='question.q' class="form-control">
-            </div>
-            <button type="button" ng-click="addNewQuestion(survey.id)" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Question</button>
+            </br>
+            <button type="button" ng-click="addNewSurvey()" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Survey</button>
+            <button type="submit" ng-click="submit(surveyForm)" class="btn btn-default">Submit</button>
           </form>
-          <br />
-          <button type="button" ng-click="addNewSurvey()" class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add Survey</button>
-          <button type="submit" ng-click="submit()" class="btn btn-default">Submit</button>
         </div>
       </div>
     </div>
@@ -46,7 +50,7 @@
 
   <script src="https://code.jquery.com/jquery-2.2.2.min.js" integrity="sha256-36cp2Co+/62rEAAYHLmRCPIych47CvdM+uTBJwSzWjI=" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
   <script src="js.js"></script>
 </body>
 
